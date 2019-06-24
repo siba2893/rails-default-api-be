@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_31_232912) do
+ActiveRecord::Schema.define(version: 2019_06_24_175019) do
 
   create_table "features", force: :cascade do |t|
     t.string "title"
@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 2019_01_31_232912) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "role_id"
+    t.string "password_reset_token"
     t.index ["email"], name: "index_users_on_email"
     t.index ["role_id"], name: "index_users_on_role_id"
   end
