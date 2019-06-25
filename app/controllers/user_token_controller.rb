@@ -9,7 +9,7 @@ class UserTokenController < Knock::AuthTokenController
     user = User.find(auth_token.payload[:sub])
     render json: {
       jwt: auth_token.token,
-      user: user.token_response
+      user: user.as_json
     }, status: :created
   end
 

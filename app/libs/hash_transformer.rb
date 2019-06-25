@@ -6,8 +6,8 @@ class HashTransformer
       if mutable
         if parameters.instance_of?(ActionController::Parameters) || parameters.is_a?(Hash)
           upper_case ?
-            parameters.transform_keys!(&:camelize) :
-            parameters.transform_keys! { |x| x.camelize(:lower) }
+            parameters.transform_keys! { |key| key.to_s.camelize } :
+            parameters.transform_keys! { |x| x.to_s.camelize(:lower) }
 
           HashTransformer.parameters_iterator(parameters) do |_k, v|
             HashTransformer.camelize(v, upper_case: upper_case, mutable: mutable)
@@ -18,8 +18,8 @@ class HashTransformer
       else
         if parameters.instance_of?(ActionController::Parameters) || parameters.is_a?(Hash)
           result = upper_case ?
-                     parameters.transform_keys(&:camelize) :
-                     parameters.transform_keys { |x| x.camelize(:lower) }
+                     parameters.transform_keys { |key| key.to_s.camelize } :
+                     parameters.transform_keys { |x| x.to_s.camelize(:lower) }
 
           HashTransformer.parameters_iterator(result) do |_k, v|
             HashTransformer.camelize(v, upper_case: upper_case, mutable: mutable)

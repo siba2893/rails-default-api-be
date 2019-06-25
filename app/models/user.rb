@@ -17,6 +17,9 @@ class User < ApplicationRecord
   has_secure_password
   has_secure_token :password_reset_token
 
+  # Validations
+  validates :email, uniqueness: true
+
   belongs_to :role
 
   has_and_belongs_to_many :features
@@ -32,7 +35,8 @@ class User < ApplicationRecord
   end
 
   # JSON RESPONSES
-  def token_response
-    self.as_json(except: [:password_digest, :created_at, :updated_at])
+
+  def as_json
+    UserSerializer.new(self).as_json
   end
 end

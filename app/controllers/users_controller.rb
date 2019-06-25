@@ -37,8 +37,12 @@ class UsersController < ApplicationController
 
   # DELETE /users/1
   def destroy
-    @user.destroy
-    json_response(messages: ['Usuario eliminado con exito.'])
+    user = User.find_by(params[:id])
+    if user.destroy
+      return json_response(messages: ['Usuario eliminado con exito.'])
+    end
+
+    json_response(errors: [user.errors])
   end
 
   def recover_password
@@ -55,7 +59,6 @@ class UsersController < ApplicationController
   def change_password
     user = User.find_by(password_reset_token: params[:token])
     if user
-      user.update(user_params)
       user.update(password_reset_token: nil)
       json_response(messages: ['Su contraseña fue actualizada con exito.'])
     else
